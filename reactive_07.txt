@@ -1,0 +1,119 @@
+import reactor.core.publisher.Flux;
+
+public class ReactiveOperatorsDemo {
+    public static void main(String[] args) {
+        Flux<Integer> numbers = Flux.range(1, 5);
+        
+        // map example
+        numbers.map(n -> n * 2)
+               .subscribe(System.out::println);
+    }
+}
+
+
+map()
+
+
+Flux<Integer> numbers = Flux.range(1, 5);
+numbers.map(n -> n * n)
+       .subscribe(System.out::println);
+
+
+Output:
+ 1
+4
+9
+16
+25
+
+filter()
+
+
+Flux<Integer> numbers = Flux.range(1, 10);
+numbers.filter(n -> n % 2 == 0)
+       .subscribe(System.out::println);
+
+Output:
+
+2
+4
+6
+8
+10
+
+flatMap()
+
+Flux<Integer> flux = Flux.just(2, 3);
+flux.flatMap(i -> Flux.range(1, i))
+    .subscribe(System.out::println);
+
+
+Output:
+
+1
+2
+1
+2
+3
+
+reduce()
+
+
+Flux<Integer> numbers = Flux.range(1, 5);
+numbers.reduce(0, Integer::sum)
+       .subscribe(System.out::println);
+
+Output:
+
+15
+
+merge()
+
+
+Flux<String> flux1 = Flux.just("A", "B");
+Flux<String> flux2 = Flux.just("1", "2");
+
+Flux.merge(flux1, flux2)
+    .subscribe(System.out::println);
+
+
+Output:
+
+A
+1
+B
+2
+
+
+
+zip()
+
+Flux<String> names = Flux.just("Alice", "Bob");
+Flux<Integer> ages = Flux.just(28, 34);
+
+Flux.zip(names, ages, (n, a) -> n + " is " + a)
+    .subscribe(System.out::println);
+
+
+
+Output:Alice is 28
+Bob is 34
+
+concat()
+
+
+Flux<String> flux1 = Flux.just("X", "Y");
+Flux<String> flux2 = Flux.just("1", "2");
+
+Flux.concat(flux1, flux2)
+    .subscribe(System.out::println);
+
+Output:
+
+X
+Y
+1
+2
+
+
+
